@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Memory First — Midnight Rose</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  /* Preloader — inline + critical so it paints before style.css or fonts arrive */
+  #page-loader {
+    position: fixed; inset: 0; z-index: 99999;
+    background: #080910;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.6s ease;
+  }
+  #page-loader.loaded { opacity: 0; pointer-events: none; }
+  .loader-ring {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 3px solid rgba(214,179,106,0.25);
+    border-top-color: #D6B36A;
+    animation: loader-spin 0.9s linear infinite;
+  }
+  .loader-heart {
+    position: absolute; font-size: 20px; color: #D6B36A;
+    animation: loader-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes loader-spin { to { transform: rotate(360deg); } }
+  @keyframes loader-pulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+</style>
+</head>
+<body data-page="lock1">
+<div id="page-loader" aria-hidden="true"><div class="loader-ring"></div><span class="loader-heart">♡</span></div>
+<div class="sky-bg deep"></div>
+<div class="vignette"></div>
+<div id="transition-veil" aria-hidden="true"></div>
+
+<main class="stage">
+  <div class="stage-inner page-fade">
+    <div class="lock-illustration" aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="lock-shackle" d="M70 90 V65 C70 42 88 25 100 25 C112 25 130 42 130 65 V90"
+              stroke="url(#g1)" stroke-width="9" stroke-linecap="round"/>
+        <rect x="48" y="88" width="104" height="86" rx="16" fill="url(#b1)" stroke="#B88A44" stroke-width="2.5"/>
+        <path class="lock-heart" d="M100 155 C86 141 66 129 66 111 C66 100 74 93 84 93 C92 93 98 98 100 105 C102 98 108 93 116 93 C126 93 134 100 134 111 C134 129 114 141 100 155 Z"
+              fill="#5A1830" stroke="#D6B36A" stroke-width="2"/>
+        <defs>
+          <linearGradient id="g1" x1="70" y1="25" x2="130" y2="90" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#D6B36A"/><stop offset="1" stop-color="#B88A44"/>
+          </linearGradient>
+          <linearGradient id="b1" x1="48" y1="88" x2="152" y2="174" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#111426"/><stop offset="1" stop-color="#080910"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <h1 class="lock-title">A little memory first...</h1>
+    <p class="lock-subtitle">Enter the day we met.</p>
+
+    <form id="lock-form" class="password-form" autocomplete="off">
+      <label for="lock-input">Date format: MM-DD-YY</label>
+      <input type="text" id="lock-input" name="lock-input" placeholder="MM-DD-YY" inputmode="numeric" aria-describedby="lock-message" maxlength="8" required>
+      <button type="submit" class="btn">Unlock&nbsp;♡</button>
+    </form>
+    <p class="lock-message" id="lock-message" role="status" aria-live="polite"></p>
+
+    <div class="lock-progress" aria-hidden="true">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+</main>
+
+<script src="js/main.js"></script>
+<script src="js/autoplay-music.js"></script>
+
+<script>
+  window.MR_LOCK_CONFIG = {
+    answer: "04-13-26",
+    next: "lock2.html",
+    isFinal: false,
+    rememberKey: "midnightRoseLock1",
+    wrongMessages: [
+      "Hmm... that's not the memory I'm looking for. Try again, my love. ♡",
+      "Not quite... think back to where it all began. ♡"
+    ]
+  };
+</script>
+<script>
+  // Auto-inserts dashes as the user types the date (MM-DD-YY / MM-DD-YYYY)
+  (function () {
+    const input = document.getElementById("lock-input");
+    if (!input) return;
+    input.addEventListener("input", function () {
+      let digits = this.value.replace(/\D/g, "").slice(0, 6);
+      let formatted = digits;
+      if (digits.length > 4) {
+        formatted = digits.slice(0, 2) + "-" + digits.slice(2, 4) + "-" + digits.slice(4);
+      } else if (digits.length > 2) {
+        formatted = digits.slice(0, 2) + "-" + digits.slice(2);
+      }
+      this.value = formatted;
+    });
+  })();
+</script>
+<script src="js/password.js"></script>
+<audio id="bg-music" loop src="song.mp3" preload="auto"></audio>
+<script src="js/preloader.js"></script>
+</body>
+</html>

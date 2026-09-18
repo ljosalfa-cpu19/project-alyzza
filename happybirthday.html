@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, My Love — Midnight Rose</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  /* Preloader — inline + critical so it paints before style.css or fonts arrive */
+  #page-loader {
+    position: fixed; inset: 0; z-index: 99999;
+    background: #080910;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.6s ease;
+  }
+  #page-loader.loaded { opacity: 0; pointer-events: none; }
+  .loader-ring {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 3px solid rgba(214,179,106,0.25);
+    border-top-color: #D6B36A;
+    animation: loader-spin 0.9s linear infinite;
+  }
+  .loader-heart {
+    position: absolute; font-size: 20px; color: #D6B36A;
+    animation: loader-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes loader-spin { to { transform: rotate(360deg); } }
+  @keyframes loader-pulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+</style>
+</head>
+<body data-page="happybirthday">
+<div id="page-loader" aria-hidden="true"><div class="loader-ring"></div><span class="loader-heart">♡</span></div>
+<div class="sky-bg"></div>
+<div class="vignette"></div>
+<div id="transition-veil" aria-hidden="true"></div>
+<div id="celebration-layer" aria-hidden="true"></div>
+
+<main class="stage">
+  <div class="stage-inner page-fade">
+    <p class="eyebrow-note" style="margin-bottom:1em;">✦ &nbsp; today is your day &nbsp; ✦</p>
+    <!-- ✏️ EDIT ME: swap in her name here if you'd like it personalized -->
+    <h1 class="birthday-title">Happy Birthday,<br>My Love&nbsp;♡</h1>
+    <p class="birthday-sub">I made you a little world. Come see it.</p>
+    <button class="btn" id="birthday-continue">Continue&nbsp;♡</button>
+  </div>
+</main>
+
+<script>
+  if (sessionStorage.getItem("midnightRoseUnlocked") !== "true") {
+    window.location.replace("lock1.html");
+  }
+</script>
+<script src="js/main.js"></script>
+<script src="js/autoplay-music.js"></script>
+
+<script>
+  (function () {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const layer = document.getElementById("celebration-layer");
+    const confettiColors = ["#D6B36A", "#B88A44", "#C98298", "#8E3A58", "#FFF5E8"];
+    const balloonColors = ["#5A1830", "#8E3A58", "#B88A44", "#111426"];
+
+    function spawnConfetti(count) {
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement("span");
+        el.className = "confetti-piece";
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        el.style.animationDuration = 3 + Math.random() * 2.5 + "s";
+        el.style.animationDelay = Math.random() * 1.2 + "s";
+        if (Math.random() > 0.5) el.style.borderRadius = "50%";
+        layer.appendChild(el);
+        setTimeout(() => el.remove(), 7000);
+      }
+    }
+
+    function spawnBalloons(count) {
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement("span");
+        el.className = "balloon-piece";
+        el.style.left = 5 + Math.random() * 90 + "vw";
+        el.style.background = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+        el.style.setProperty("--sway", (Math.random() * 60 - 30) + "px");
+        el.style.animationDuration = 6 + Math.random() * 4 + "s";
+        el.style.animationDelay = Math.random() * 1.5 + "s";
+        layer.appendChild(el);
+        setTimeout(() => el.remove(), 12000);
+      }
+    }
+
+    if (!prefersReducedMotion) {
+      spawnConfetti(60);
+      spawnBalloons(9);
+      window.MidnightRose?.burstHearts(16);
+
+      // a second smaller burst a moment later, for good measure
+      setTimeout(() => {
+        spawnConfetti(30);
+        spawnBalloons(4);
+      }, 2600);
+    }
+
+    document.getElementById("birthday-continue").addEventListener("click", function () {
+      const veil = document.getElementById("transition-veil");
+      window.MidnightRose?.burstHearts(14);
+      this.disabled = true;
+      setTimeout(() => {
+        veil.classList.add("active");
+        setTimeout(() => { window.location.href = "welcome.html"; }, 500);
+      }, 500);
+    });
+  })();
+</script>
+<script src="js/preloader.js"></script>
+</body>
+</html>

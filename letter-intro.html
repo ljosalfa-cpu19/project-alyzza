@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Wrote Something For You — Midnight Rose</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  /* Preloader — inline + critical so it paints before style.css or fonts arrive */
+  #page-loader {
+    position: fixed; inset: 0; z-index: 99999;
+    background: #080910;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.6s ease;
+  }
+  #page-loader.loaded { opacity: 0; pointer-events: none; }
+  .loader-ring {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 3px solid rgba(214,179,106,0.25);
+    border-top-color: #D6B36A;
+    animation: loader-spin 0.9s linear infinite;
+  }
+  .loader-heart {
+    position: absolute; font-size: 20px; color: #D6B36A;
+    animation: loader-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes loader-spin { to { transform: rotate(360deg); } }
+  @keyframes loader-pulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+</style>
+</head>
+<body data-page="letter-intro">
+<div id="page-loader" aria-hidden="true"><div class="loader-ring"></div><span class="loader-heart">♡</span></div>
+<div class="sky-bg"></div>
+<div class="vignette"></div>
+<div id="transition-veil" aria-hidden="true"></div>
+
+<main class="stage">
+  <div class="stage-inner page-fade">
+    <p class="landing-heading">I wrote something for you...</p>
+
+    <button class="envelope-wrap" id="envelope-btn" aria-label="Press the envelope to open your letter">
+      <div class="envelope">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="30" width="280" height="160" rx="10" fill="#5A1830" stroke="#D6B36A" stroke-width="2"/>
+          <polygon class="flap" points="10,30 150,120 290,30" fill="#8E3A58" stroke="#D6B36A" stroke-width="2"
+                   style="transform-origin: 150px 30px;"/>
+          <g class="letter-peek" style="transform: translateY(0); opacity: 0;">
+            <rect x="55" y="55" width="190" height="120" rx="4" fill="#FFF5E8"/>
+          </g>
+          <g class="seal">
+            <circle cx="150" cy="95" r="20" fill="#B88A44" stroke="#D6B36A" stroke-width="1.5"/>
+            <path d="M150 105 C144 100 137 95 137 88 C137 84 140 81 144 81 C147 81 149 83 150 86 C151 83 153 81 156 81 C160 81 163 84 163 88 C163 95 156 100 150 105 Z" fill="#5A1830"/>
+          </g>
+        </svg>
+      </div>
+    </button>
+
+    <p class="envelope-instruction">Press the envelope</p>
+    <p class="landing-heading" style="margin-top:2.2em;">Open it when you're ready. ♡</p>
+  </div>
+</main>
+
+<script>
+  if (sessionStorage.getItem("midnightRoseUnlocked") !== "true") {
+    window.location.replace("lock1.html");
+  }
+</script>
+<script src="js/main.js"></script>
+<script src="js/autoplay-music.js"></script>
+
+<script>
+  document.getElementById("envelope-btn").addEventListener("click", function () {
+    const wrap = this;
+    const veil = document.getElementById("transition-veil");
+    wrap.classList.add("opening");
+    wrap.disabled = true;
+    window.MidnightRose.burstHearts(20);
+    setTimeout(() => {
+      veil.classList.add("active");
+      setTimeout(() => { window.location.href = "love-letter.html"; }, 500);
+    }, 1900);
+  });
+</script>
+<audio id="bg-music" loop src="song.mp3" preload="auto"></audio>
+<script src="js/preloader.js"></script>
+</body>
+</html>

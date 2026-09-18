@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Midnight Rose — A Little Something For You</title>
+<meta name="description" content="A little something made just for you.">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  /* Preloader — inline + critical so it paints before style.css or fonts arrive */
+  #page-loader {
+    position: fixed; inset: 0; z-index: 99999;
+    background: #080910;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.6s ease;
+  }
+  #page-loader.loaded { opacity: 0; pointer-events: none; }
+  .loader-ring {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 3px solid rgba(214,179,106,0.25);
+    border-top-color: #D6B36A;
+    animation: loader-spin 0.9s linear infinite;
+  }
+  .loader-heart {
+    position: absolute; font-size: 20px; color: #D6B36A;
+    animation: loader-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes loader-spin { to { transform: rotate(360deg); } }
+  @keyframes loader-pulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+</style>
+</head>
+<body data-page="landing">
+<div id="page-loader" aria-hidden="true"><div class="loader-ring"></div><span class="loader-heart">♡</span></div>
+<div class="sky-bg"></div>
+<div class="vignette"></div>
+<div id="transition-veil" aria-hidden="true"></div>
+
+<main class="stage">
+  <div class="stage-inner page-fade">
+    <p class="eyebrow-note" style="margin-bottom:1.2em;">✦ &nbsp; for you &nbsp; ✦</p>
+
+    <div class="lock-illustration" id="landing-lock" aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="lock-shackle" d="M70 90 V65 C70 42 88 25 100 25 C112 25 130 42 130 65 V90"
+              stroke="url(#goldGrad)" stroke-width="9" stroke-linecap="round"/>
+        <rect x="48" y="88" width="104" height="86" rx="16" fill="url(#bodyGrad)" stroke="#B88A44" stroke-width="2.5"/>
+        <path class="lock-heart" d="M100 155 C86 141 66 129 66 111 C66 100 74 93 84 93 C92 93 98 98 100 105 C102 98 108 93 116 93 C126 93 134 100 134 111 C134 129 114 141 100 155 Z"
+              fill="#5A1830" stroke="#D6B36A" stroke-width="2"/>
+        <defs>
+          <linearGradient id="goldGrad" x1="70" y1="25" x2="130" y2="90" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#D6B36A"/><stop offset="1" stop-color="#B88A44"/>
+          </linearGradient>
+          <linearGradient id="bodyGrad" x1="48" y1="88" x2="152" y2="174" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#111426"/><stop offset="1" stop-color="#080910"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <p class="landing-heading">A Little Something For You...</p>
+
+    <button class="btn" id="open-btn">Open My Heart&nbsp;♡</button>
+  </div>
+</main>
+
+<button class="hidden-heart" style="top:14px; left:18px;" aria-label="A tiny secret">♡</button>
+<div class="easter-egg-overlay">
+  <p>If you're reading this... I love you. ♡</p>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/autoplay-music.js"></script>
+
+<script>
+  document.getElementById("open-btn").addEventListener("click", function () {
+    const lock = document.getElementById("landing-lock");
+    const veil = document.getElementById("transition-veil");
+    lock.classList.add("unlocking");
+    window.MidnightRose.burstHearts(22);
+    this.disabled = true;
+    setTimeout(() => {
+      veil.classList.add("active");
+      setTimeout(() => { window.location.href = "lock1.html"; }, 500);
+    }, 1100);
+    
+  });
+</script>
+<audio id="bg-music" loop src="song.mp3" preload="auto"></audio>
+<script src="js/preloader.js"></script>
+</body>
+</html>
