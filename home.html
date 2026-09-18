@@ -5,34 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You, MI Amor~ — Midnight Rose</title>
 <link rel="stylesheet" href="css/style.css">
-<style>
-  /* Preloader — inline + critical so it paints before style.css or fonts arrive */
-  #page-loader {
-    position: fixed; inset: 0; z-index: 99999;
-    background: #080910;
-    display: flex; align-items: center; justify-content: center;
-    transition: opacity 0.6s ease;
-  }
-  #page-loader.loaded { opacity: 0; pointer-events: none; }
-  .loader-ring {
-    width: 52px; height: 52px; border-radius: 50%;
-    border: 3px solid rgba(214,179,106,0.25);
-    border-top-color: #D6B36A;
-    animation: loader-spin 0.9s linear infinite;
-  }
-  .loader-heart {
-    position: absolute; font-size: 20px; color: #D6B36A;
-    animation: loader-pulse 1.2s ease-in-out infinite;
-  }
-  @keyframes loader-spin { to { transform: rotate(360deg); } }
-  @keyframes loader-pulse {
-    0%, 100% { transform: scale(0.85); opacity: 0.7; }
-    50% { transform: scale(1.05); opacity: 1; }
-  }
-</style>
 </head>
 <body data-page="home">
-<div id="page-loader" aria-hidden="true"><div class="loader-ring"></div><span class="loader-heart">♡</span></div>
+
 <div class="sky-bg"></div>
 <div class="vignette"></div>
 <div id="transition-veil" aria-hidden="true"></div>
@@ -50,6 +25,7 @@
   </div>
   <button class="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
 </nav>
+
 <div class="mobile-nav">
   <button class="mobile-nav-close" aria-label="Close menu">✕</button>
   <span class="brand">♡ For You, MI Amor~</span>
@@ -73,26 +49,31 @@
     <h3>Love Letter</h3>
     <p>Words straight from my heart.</p>
   </a>
+
   <a class="hub-card" href="notes.html" data-transition>
     <span class="icon">📝</span>
     <h3>Notes</h3>
     <p>Little things I want you to know.</p>
   </a>
+
   <a class="hub-card" href="gallery.html" data-transition>
     <span class="icon">📸</span>
     <h3>Gallery</h3>
     <p>A collection of moments with you.</p>
   </a>
+
   <a class="hub-card" href="memories.html" data-transition>
     <span class="icon">❤️</span>
     <h3>Memories</h3>
     <p>The moments, reasons, and memories that make us us.</p>
   </a>
+
   <a class="hub-card" href="digital-gifts.html" data-transition>
     <span class="icon">🎁</span>
     <h3>Digital Gifts</h3>
     <p>A little coupon book, made just for you.</p>
   </a>
+
   <a class="hub-card" href="video.html" data-transition>
     <span class="icon">🎬</span>
     <h3>Video</h3>
@@ -103,16 +84,18 @@
 <footer class="site-footer">✦ this isn't just a website, this is our little world ✦</footer>
 
 <button id="music-toggle" aria-label="Play music" data-playing="false">♪̸</button>
+
 <!-- ✏️ EDIT ME: point src at your own music file (mp3) if you'd like background music -->
 <audio id="bg-music" loop src="song.mp3" preload="auto"></audio>
 
 <button class="hidden-heart" style="bottom:80px; left:24px;" aria-label="A tiny secret">♡</button>
+
 <div class="easter-egg-overlay">
   <p>If you're reading this... I love you. ♡</p>
 </div>
 
 <script src="js/main.js"></script>
 <script src="js/autoplay-music.js"></script>
-<script src="js/preloader.js"></script>
+
 </body>
 </html>
